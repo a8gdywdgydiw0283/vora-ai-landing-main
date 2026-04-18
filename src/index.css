@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 40% 4%;
+    --foreground: 210 20% 90%;
+
+    --card: 215 30% 8%;
+    --card-foreground: 210 20% 90%;
+
+    --popover: 215 30% 8%;
+    --popover-foreground: 210 20% 90%;
+
+    --primary: 185 100% 50%;
+    --primary-foreground: 220 40% 4%;
+
+    --secondary: 215 25% 14%;
+    --secondary-foreground: 210 20% 85%;
+
+    --muted: 215 20% 12%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 215 25% 14%;
+    --accent-foreground: 210 20% 90%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 215 20% 18%;
+    --input: 215 20% 18%;
+    --ring: 185 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --cyan-glow: 185 100% 50%;
+    --silver: 210 10% 75%;
+    --silver-bright: 210 15% 88%;
+    --glass-bg: 215 30% 10%;
+    --glass-border: 210 15% 25%;
+    --deep-blue: 220 60% 8%;
+
+    --sidebar-background: 220 40% 4%;
+    --sidebar-foreground: 210 20% 90%;
+    --sidebar-primary: 185 100% 50%;
+    --sidebar-primary-foreground: 220 40% 4%;
+    --sidebar-accent: 215 25% 14%;
+    --sidebar-accent-foreground: 210 20% 90%;
+    --sidebar-border: 215 20% 18%;
+    --sidebar-ring: 185 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-card/40 backdrop-blur-xl border border-glass-border rounded-2xl;
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 30px hsl(var(--cyan-glow) / 0.3), 0 0 60px hsl(var(--cyan-glow) / 0.1);
+  }
+
+  .glow-cyan-sm {
+    box-shadow: 0 0 15px hsl(var(--cyan-glow) / 0.2), 0 0 30px hsl(var(--cyan-glow) / 0.08);
+  }
+
+  .text-gradient-silver {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--silver-bright)), hsl(var(--silver)), hsl(var(--silver-bright)));
+  }
+
+  .gradient-deep {
+    background: linear-gradient(180deg, hsl(220 40% 4%) 0%, hsl(220 60% 8%) 50%, hsl(220 40% 4%) 100%);
+  }
+}
+
+/* Orb animation */
+@keyframes orb-rotate {
+  0% { transform: rotateY(0deg) rotateX(15deg); }
+  100% { transform: rotateY(360deg) rotateX(15deg); }
+}
+
+@keyframes orb-pulse {
+  0%, 100% { box-shadow: 0 0 60px hsl(185 100% 50% / 0.2), 0 0 120px hsl(185 100% 50% / 0.1), inset 0 0 60px hsl(185 100% 50% / 0.05); }
+  50% { box-shadow: 0 0 80px hsl(185 100% 50% / 0.35), 0 0 160px hsl(185 100% 50% / 0.15), inset 0 0 80px hsl(185 100% 50% / 0.1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes timeline-pulse {
+  0% { top: 0%; opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.animate-orb-rotate {
+  animation: orb-rotate 20s linear infinite;
+}
+
+.animate-orb-pulse {
+  animation: orb-pulse 4s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes shimmer-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.animate-shimmer-sweep {
+  animation: shimmer-sweep 3s ease-in-out infinite;
+}
+
+/* MODIFIED: hero 3D layered effects */
+@keyframes hero-blob-float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.25; }
+  50% { transform: translate3d(0, -32px, 0) scale(1.08); opacity: 0.42; }
+}
+
+@keyframes hero-orbit-spin {
+  0% { transform: perspective(900px) rotateX(72deg) rotateZ(0deg); }
+  100% { transform: perspective(900px) rotateX(72deg) rotateZ(360deg); }
+}
+
+@keyframes hero-card-bob-tilt {
+  0%, 100% { transform: translate3d(0, 0, 0) rotateX(8deg) rotateY(-6deg); }
+  50% { transform: translate3d(0, -14px, 0) rotateX(13deg) rotateY(6deg); }
+}
+
+.hero-blob {
+  position: absolute;
+  border-radius: 9999px;
+  background: hsl(var(--cyan-glow) / 0.2);
+  filter: blur(70px);
+  animation: hero-blob-float 11s ease-in-out infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-blob-one {
+  top: 12%;
+  left: 8%;
+  width: 240px;
+  height: 240px;
+  animation-delay: 0s;
+}
+
+.hero-blob-two {
+  top: 26%;
+  right: 10%;
+  width: 290px;
+  height: 290px;
+  animation-delay: 1.5s;
+}
+
+.hero-blob-three {
+  bottom: 14%;
+  left: 38%;
+  width: 220px;
+  height: 220px;
+  animation-delay: 3s;
+}
+
+.hero-grid-floor {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: -30%;
+  height: 52%;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(hsl(var(--cyan-glow) / 0.13) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--cyan-glow) / 0.13) 1px, transparent 1px);
+  background-size: 58px 58px;
+  transform: perspective(950px) rotateX(76deg);
+  transform-origin: center top;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+}
+
+.hero-orbit-ring {
+  position: absolute;
+  right: 12%;
+  top: 18%;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  border: 2px dashed hsl(var(--cyan-glow) / 0.35);
+  pointer-events: none;
+  z-index: 2;
+  animation: hero-orbit-spin 18s linear infinite;
+}
+
+.hero-glass-float-card {
+  position: absolute;
+  right: 22%;
+  top: 12%;
+  width: 240px;
+  height: 140px;
+  border-radius: 1rem;
+  z-index: 2;
+  pointer-events: none;
+  border: 1px solid hsl(var(--silver) / 0.24);
+  background:
+    linear-gradient(145deg, hsl(var(--foreground) / 0.08), hsl(var(--background) / 0.28)),
+    radial-gradient(circle at 30% 30%, hsl(var(--cyan-glow) / 0.18), transparent 64%);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 45px hsl(220 60% 2% / 0.4);
+  transform-style: preserve-3d;
+  animation: hero-card-bob-tilt 7s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+  .hero-orbit-ring,
+  .hero-glass-float-card {
+    right: 2%;
+    transform: scale(0.75);
+    transform-origin: top right;
+  }
+
+  .hero-grid-floor {
+    left: -20%;
+    right: -20%;
+  }
+}
