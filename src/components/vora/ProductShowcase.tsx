@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { MessageSquare, TrendingUp, Users } from "lucide-react";
 
 const ProductShowcase = () => (
-  <section className="py-24 relative overflow-hidden">
+  <section className="section-perf relative overflow-hidden">
     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-deep-blue/50 to-transparent" />
     <div className="container relative z-10 mx-auto px-6">
       <motion.h2

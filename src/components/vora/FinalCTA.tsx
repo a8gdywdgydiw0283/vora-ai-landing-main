@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 const FinalCTA = () => (
-  <section className="py-32 relative overflow-hidden">
+  <section className="section-cta relative overflow-hidden">
     <div className="absolute inset-0 bg-gradient-to-b from-background via-deep-blue to-background" />
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]" />
 

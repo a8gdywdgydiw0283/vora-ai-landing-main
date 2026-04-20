@@ -10,11 +10,11 @@ const features = [
 ];
 
 const FeaturesSection = () => (
-  <section className="py-24 relative">
+  <section className="section-features section-features-layout relative">
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-cyan-glow/3 rounded-full blur-[150px]" />
-    <div className="container relative z-10 mx-auto px-6">
+    <div className="relative z-10">
       <motion.div
-        className="text-center mb-16"
+        className="features-heading text-center mb-16"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -24,17 +24,17 @@ const FeaturesSection = () => (
         <p className="mt-4 text-muted-foreground text-lg">Everything you need to automate customer engagement.</p>
       </motion.div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="features-grid">
         {features.map((f, i) => (
           <motion.div
             key={f.title}
-            className="glass-panel p-8 group hover:glow-cyan-sm transition-all duration-500 hover:-translate-y-1"
+            className="feature-card"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1, duration: 0.5 }}
           >
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
+            <div className="feature-icon">
               <f.icon className="w-6 h-6 text-primary" />
             </div>
             <h3 className="text-xl font-semibold text-foreground mb-3">{f.title}</h3>

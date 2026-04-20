@@ -12,6 +12,7 @@ const navLinks = [
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [pricingOpen, setPricingOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const closePricing = () => setPricingOpen(false);
 
@@ -24,15 +25,25 @@ const Navbar = () => {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [pricingOpen]);
 
+  useEffect(() => {
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <>
       <motion.header
-        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border/40"
+        className={`navbar ${isScrolled ? "scrolled" : ""}`}
         initial={{ y: -80 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <div className="container mx-auto px-6 flex items-center justify-between h-16 md:h-20">
+        <div className="w-full flex items-center justify-between h-16">
           {/* Logo */}
           <a href="#" className="flex items-center gap-3">
             <img src={voraLogo} alt="VORA" className="h-14 md:h-16 w-auto max-w-full" />
@@ -44,7 +55,7 @@ const Navbar = () => {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm font-medium text-silver hover:text-foreground transition-colors duration-200 tracking-wide"
+                className="nav-link"
               >
                 {link.label}
               </a>
@@ -52,7 +63,7 @@ const Navbar = () => {
             {/* MODIFIED: pricing button */}
             <button
               type="button"
-              className="text-sm font-medium text-silver hover:text-foreground transition-colors duration-200 tracking-wide"
+              className="nav-link"
               onClick={() => setPricingOpen(true)}
             >
               Pricing

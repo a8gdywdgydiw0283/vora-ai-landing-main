@@ -9,7 +9,7 @@ const benefits = [
 ];
 
 const BusinessBenefits = () => (
-  <section className="py-24">
+  <section className="section-why">
     <div className="container mx-auto px-6 max-w-4xl">
       <motion.h2
         className="text-3xl md:text-5xl font-bold text-center text-foreground mb-16"

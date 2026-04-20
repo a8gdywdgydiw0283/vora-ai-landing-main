@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 const ProblemSolution = () => (
-  <section className="py-24 relative">
+  <section className="section-features relative">
     <div className="container mx-auto px-6">
       <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
         <motion.div

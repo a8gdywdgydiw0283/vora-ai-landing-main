@@ -4,7 +4,7 @@ import { Activity } from "lucide-react";
 const logos = ["​", "​", "​", "\n", "​"];
 
 const SocialProof = () => (
-  <section className="relative py-16 overflow-hidden">
+  <section className="section-howit relative overflow-hidden">
     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-secondary/30 to-transparent" />
     <div className="container relative z-10 mx-auto px-6">
       <motion.div

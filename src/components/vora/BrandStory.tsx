@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 const BrandStory = () => (
-  <section className="py-24 relative overflow-hidden">
+  <section className="section-why relative overflow-hidden">
     {/* Fluid background abstraction */}
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] opacity-20">
       <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/30 via-silver/10 to-primary/20 blur-[80px] animate-float" />
