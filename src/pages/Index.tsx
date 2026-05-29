@@ -10,10 +10,6 @@ import BusinessBenefits from "@/components/vora/BusinessBenefits";
 import Testimonials from "@/components/vora/Testimonials";
 import BrandStory from "@/components/vora/BrandStory";
 import FinalCTA from "@/components/vora/FinalCTA";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const getStrategicHeadline = () => {
   if (typeof window === "undefined") {
@@ -61,29 +57,44 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>(".gsap-reveal").forEach((element) => {
-        gsap.fromTo(
-          element,
-          { y: 48, autoAlpha: 0 },
-          {
-            y: 0,
-            autoAlpha: 1,
-            duration: 0.95,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: element,
-              start: "top 88%",
-              once: true,
+    let disposed = false;
+    let gsapContext: { revert: () => void } | undefined;
+
+    const initScrollAnimations = async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      if (disposed) return;
+
+      gsap.registerPlugin(ScrollTrigger);
+      gsapContext = gsap.context(() => {
+        gsap.utils.toArray<HTMLElement>(".gsap-reveal").forEach((element) => {
+          gsap.fromTo(
+            element,
+            { y: 48, autoAlpha: 0 },
+            {
+              y: 0,
+              autoAlpha: 1,
+              duration: 0.95,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: element,
+                start: "top 88%",
+                once: true,
+              },
             },
-          },
-        );
+          );
+        });
       });
-    });
+    };
+
+    void initScrollAnimations();
 
     return () => {
-      ctx.revert();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      disposed = true;
+      gsapContext?.revert();
+      void import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      });
     };
   }, []);
 
@@ -92,64 +103,90 @@ const Index = () => {
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
-    if (prefersReducedMotion || isCoarsePointer) {
-      gsap.set(cursorRef.current, { autoAlpha: 0 });
-      return;
-    }
+    if (prefersReducedMotion || isCoarsePointer) return;
 
-    const cursor = cursorRef.current;
-    gsap.set(cursor, { x: -500, y: -500, autoAlpha: 0.9 });
+    let disposed = false;
+    let removeMouseMove: (() => void) | undefined;
 
-    const xTo = gsap.quickTo(cursor, "x", { duration: 0.26, ease: "power3.out" });
-    const yTo = gsap.quickTo(cursor, "y", { duration: 0.26, ease: "power3.out" });
+    const initCursor = async () => {
+      const { gsap } = await import("gsap");
+      if (disposed || !cursorRef.current) return;
 
-    const onMouseMove = (event: MouseEvent) => {
-      xTo(event.clientX - 170);
-      yTo(event.clientY - 170);
+      const cursor = cursorRef.current;
+      gsap.set(cursor, { x: -500, y: -500, autoAlpha: 0.9 });
+
+      const xTo = gsap.quickTo(cursor, "x", { duration: 0.26, ease: "power3.out" });
+      const yTo = gsap.quickTo(cursor, "y", { duration: 0.26, ease: "power3.out" });
+
+      const onMouseMove = (event: MouseEvent) => {
+        xTo(event.clientX - 170);
+        yTo(event.clientY - 170);
+      };
+
+      window.addEventListener("mousemove", onMouseMove);
+      removeMouseMove = () => {
+        window.removeEventListener("mousemove", onMouseMove);
+        gsap.killTweensOf(cursor);
+      };
     };
 
-    window.addEventListener("mousemove", onMouseMove);
+    void initCursor();
 
     return () => {
-      window.removeEventListener("mousemove", onMouseMove);
-      gsap.killTweensOf(cursor);
+      disposed = true;
+      removeMouseMove?.();
     };
   }, []);
 
   useEffect(() => {
     if (!loaderVisible || !loaderRef.current || !loaderBarRef.current) return;
 
-    const loaderElement = loaderRef.current;
-    const barElement = loaderBarRef.current;
-    const brandPulse = gsap.to(".vora-loader-brand", {
-      opacity: 0.95,
-      y: -2,
-      duration: 0.7,
-      yoyo: true,
-      repeat: -1,
-      ease: "sine.inOut",
-    });
+    let disposed = false;
+    let cleanupLoader: (() => void) | undefined;
 
-    const loaderTimeline = gsap.timeline();
-    loaderTimeline
-      .fromTo(
-        barElement,
-        { scaleX: 0, transformOrigin: "left center" },
-        { scaleX: 1, duration: 1.25, ease: "power2.inOut" },
-      )
-      .to(loaderElement, {
-        autoAlpha: 0,
-        duration: 0.55,
-        delay: 0.2,
-        ease: "power2.out",
-        onComplete: () => {
-          setLoaderVisible(false);
-        },
+    const initLoader = async () => {
+      const { gsap } = await import("gsap");
+      if (disposed || !loaderRef.current || !loaderBarRef.current) return;
+
+      const loaderElement = loaderRef.current;
+      const barElement = loaderBarRef.current;
+      const brandPulse = gsap.to(".vora-loader-brand", {
+        opacity: 0.95,
+        y: -2,
+        duration: 0.7,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut",
       });
 
+      const loaderTimeline = gsap.timeline();
+      loaderTimeline
+        .fromTo(
+          barElement,
+          { scaleX: 0, transformOrigin: "left center" },
+          { scaleX: 1, duration: 1.25, ease: "power2.inOut" },
+        )
+        .to(loaderElement, {
+          autoAlpha: 0,
+          duration: 0.55,
+          delay: 0.2,
+          ease: "power2.out",
+          onComplete: () => {
+            setLoaderVisible(false);
+          },
+        });
+
+      cleanupLoader = () => {
+        brandPulse.kill();
+        loaderTimeline.kill();
+      };
+    };
+
+    void initLoader();
+
     return () => {
-      brandPulse.kill();
-      loaderTimeline.kill();
+      disposed = true;
+      cleanupLoader?.();
     };
   }, [loaderVisible]);
 

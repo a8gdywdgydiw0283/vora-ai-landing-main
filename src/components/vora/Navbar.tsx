@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import voraLogo from "@/assets/vora-logo-custom.png";
+import voraLogo, { VORA_LOGO_HEIGHT, VORA_LOGO_WIDTH } from "@/assets/vora-logo";
 
 const navLinks = [
   { label: "Features", href: "#features" },
@@ -46,7 +46,14 @@ const Navbar = () => {
         <div className="w-full flex items-center justify-between h-16">
           {/* Logo */}
           <a href="#" className="flex items-center gap-3">
-            <img src={voraLogo} alt="VORA" className="h-14 md:h-16 w-auto max-w-full" />
+            <img
+              src={voraLogo}
+              alt="VORA"
+              width={VORA_LOGO_WIDTH}
+              height={VORA_LOGO_HEIGHT}
+              decoding="async"
+              className="h-14 md:h-16 w-auto max-w-full"
+            />
           </a>
 
           {/* Desktop nav */}

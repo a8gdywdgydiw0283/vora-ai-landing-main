@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import voraLogo from "@/assets/vora-logo-custom.png";
+import voraLogo, { VORA_LOGO_HEIGHT, VORA_LOGO_WIDTH } from "@/assets/vora-logo";
 
 type HeroSectionProps = {
   strategicHeadline: string;
@@ -25,6 +25,10 @@ const HeroLogo = () => (
       <motion.img
         src={voraLogo}
         alt="VORA"
+        width={VORA_LOGO_WIDTH}
+        height={VORA_LOGO_HEIGHT}
+        decoding="async"
+        fetchPriority="high"
         className="w-full h-full object-contain"
         initial={{ scale: 0.7, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
