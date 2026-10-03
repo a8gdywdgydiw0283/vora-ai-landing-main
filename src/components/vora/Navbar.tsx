@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import voraLogo from "@/assets/vora-logo-custom.png";
+import voraLogo, { VORA_LOGO_HEIGHT, VORA_LOGO_WIDTH } from "@/assets/vora-logo";
 
 const navLinks = [
   { label: "Features", href: "#features" },
@@ -46,7 +46,14 @@ const Navbar = () => {
         <div className="w-full flex items-center justify-between h-16">
           {/* Logo */}
           <a href="#" className="flex items-center gap-3">
-            <img src={voraLogo} alt="VORA" className="h-14 md:h-16 w-auto max-w-full" />
+            <img
+              src={voraLogo}
+              alt="VORA"
+              width={VORA_LOGO_WIDTH}
+              height={VORA_LOGO_HEIGHT}
+              decoding="async"
+              className="h-14 md:h-16 w-auto max-w-full"
+            />
           </a>
 
           {/* Desktop nav */}
@@ -168,12 +175,11 @@ const Navbar = () => {
 
               <div className="p-6 grid grid-cols-1 lg:grid-cols-3 gap-5">
                 <div className="rounded-2xl border border-border/60 bg-background/60 p-5">
-                  <h3 className="text-xl font-bold">Vora Pulse (Starter)</h3>
+                  <h3 className="text-xl font-bold">VORA PULSE</h3>
                   <p className="mt-1 text-sm text-muted-foreground">Single-branch clinics &amp; small practices</p>
                   <div className="mt-4 space-y-1 text-sm">
                     <p><span className="text-silver">One-time setup:</span> 4,000 EGP</p>
                     <p><span className="text-silver">Monthly subscription:</span> 2,000 EGP / mo</p>
-                    <p className="text-primary">Save 3,000 EGP on setup</p>
                   </div>
                   <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
                     <li>• 24/7 instant replies to common patient questions</li>
@@ -186,15 +192,15 @@ const Navbar = () => {
                     type="button"
                     className="mt-5 w-full px-4 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:scale-[1.02] transition-transform duration-200 glow-cyan-sm"
                   >
-                    Invest
+                    Invest Now
                   </button>
                 </div>
 
                 <div className="rounded-2xl border-2 border-primary bg-background/70 p-5 shadow-[0_0_20px_hsl(var(--cyan-glow)/0.12)]">
                   <div className="flex items-center justify-between gap-3">
-                    <h3 className="text-xl font-bold">Vora Prime (Most Popular) ⭐</h3>
+                    <h3 className="text-xl font-bold">VORA PRIME</h3>
                     <span className="rounded-full border border-primary/40 bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">
-                      Most Popular
+                      Most Recommended
                     </span>
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">Mid-size &amp; growing clinics</p>
@@ -214,15 +220,15 @@ const Navbar = () => {
                     type="button"
                     className="mt-5 w-full px-4 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:scale-[1.02] transition-transform duration-200 glow-cyan-sm"
                   >
-                    Invest
+                    Invest Now
                   </button>
                 </div>
 
                 <div className="rounded-2xl border border-border/60 bg-background/60 p-5">
-                  <h3 className="text-xl font-bold">Vora Titan (Enterprise)</h3>
+                  <h3 className="text-xl font-bold">VORA TITAN</h3>
                   <p className="mt-1 text-sm text-muted-foreground">Large multi-branch operations</p>
                   <div className="mt-4 space-y-1 text-sm">
-                    <p><span className="text-silver">One-time setup:</span> 8,000 EGP</p>
+                    <p><span className="text-silver">One-time setup:</span> 8,500 EGP</p>
                     <p><span className="text-silver">Monthly subscription:</span> 4,500 EGP / mo</p>
                   </div>
                   <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
@@ -237,7 +243,7 @@ const Navbar = () => {
                     type="button"
                     className="mt-5 w-full px-4 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:scale-[1.02] transition-transform duration-200 glow-cyan-sm"
                   >
-                    Invest
+                    Invest Now
                   </button>
                 </div>
               </div>

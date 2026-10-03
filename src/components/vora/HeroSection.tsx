@@ -1,5 +1,9 @@
 import { motion } from "framer-motion";
-import voraLogo from "@/assets/vora-logo-custom.png";
+import voraLogo, { VORA_LOGO_HEIGHT, VORA_LOGO_WIDTH } from "@/assets/vora-logo";
+
+type HeroSectionProps = {
+  strategicHeadline: string;
+};
 
 const HeroLogo = () => (
   <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 flex items-center justify-center">
@@ -21,6 +25,10 @@ const HeroLogo = () => (
       <motion.img
         src={voraLogo}
         alt="VORA"
+        width={VORA_LOGO_WIDTH}
+        height={VORA_LOGO_HEIGHT}
+        decoding="async"
+        fetchPriority="high"
         className="w-full h-full object-contain"
         initial={{ scale: 0.7, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -40,7 +48,7 @@ const HeroLogo = () => (
   </div>
 );
 
-const HeroSection = () => {
+const HeroSection = ({ strategicHeadline }: HeroSectionProps) => {
   return (
     <section className="hero-section section-hero relative overflow-hidden">
       {/* Bg gradient */}
@@ -72,7 +80,7 @@ const HeroSection = () => {
               className="block w-full text-center text-4xl font-semibold tracking-[0.08em]"
               style={{ fontFamily: '"Bebas Neue", sans-serif', color: '#00F2FF' }}
             >
-              While You Rest, Your Competitors Close Your Deals
+              {strategicHeadline}
             </span>
           </h1>
           <motion.p
